@@ -5,7 +5,7 @@ namespace Assignment1CRUD.Data
 {
     public class DataContext : DbContext{
 
-        public DbSet<UserDetails>  UserDetails { get; set; }
+        public DbSet<UserData>  UserData { get; set; }
 
         public DbSet<PassManage> PassManage { get; set; }
 

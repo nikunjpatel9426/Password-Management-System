@@ -10,87 +10,87 @@ using Assignment1CRUD.Models;
 
 namespace Assignment1CRUD.Controllers
 {
-    public class UserDetailsController : Controller
+    public class UserDatasController : Controller
     {
         private readonly DataContext _context;
 
-        public UserDetailsController(DataContext context)
+        public UserDatasController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: UserDetails
+        // GET: UserDatas
         public async Task<IActionResult> Index()
         {
-              return _context.UserDetails != null ? 
-                          View(await _context.UserDetails.ToListAsync()) :
-                          Problem("Entity set 'DataContext.UserDetails'  is null.");
+              return _context.UserData != null ? 
+                          View(await _context.UserData.ToListAsync()) :
+                          Problem("Entity set 'DataContext.UserData'  is null.");
         }
 
-        // GET: UserDetails/Details/5
+        // GET: UserDatas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.UserDetails == null)
+            if (id == null || _context.UserData == null)
             {
                 return NotFound();
             }
 
-            var userDetails = await _context.UserDetails
-                .FirstOrDefaultAsync(m => m.userId == id);
-            if (userDetails == null)
+            var userData = await _context.UserData
+                .FirstOrDefaultAsync(m => m.userID == id);
+            if (userData == null)
             {
                 return NotFound();
             }
 
-            return View(userDetails);
+            return View(userData);
         }
 
-        // GET: UserDetails/Create
+        // GET: UserDatas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: UserDetails/Create
+        // POST: UserDatas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("userId,name,email,password")] UserDetails userDetails)
+        public async Task<IActionResult> Create([Bind("userID,name,email,password")] UserData userData)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userDetails);
+                _context.Add(userData);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(userDetails);
+            return View(userData);
         }
 
-        // GET: UserDetails/Edit/5
+        // GET: UserDatas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.UserDetails == null)
+            if (id == null || _context.UserData == null)
             {
                 return NotFound();
             }
 
-            var userDetails = await _context.UserDetails.FindAsync(id);
-            if (userDetails == null)
+            var userData = await _context.UserData.FindAsync(id);
+            if (userData == null)
             {
                 return NotFound();
             }
-            return View(userDetails);
+            return View(userData);
         }
 
-        // POST: UserDetails/Edit/5
+        // POST: UserDatas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("userId,name,email,password")] UserDetails userDetails)
+        public async Task<IActionResult> Edit(int id, [Bind("userID,name,email,password")] UserData userData)
         {
-            if (id != userDetails.userId)
+            if (id != userData.userID)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace Assignment1CRUD.Controllers
             {
                 try
                 {
-                    _context.Update(userDetails);
+                    _context.Update(userData);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserDetailsExists(userDetails.userId))
+                    if (!UserDataExists(userData.userID))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace Assignment1CRUD.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(userDetails);
+            return View(userData);
         }
 
-        // GET: UserDetails/Delete/5
+        // GET: UserDatas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.UserDetails == null)
+            if (id == null || _context.UserData == null)
             {
                 return NotFound();
             }
 
-            var userDetails = await _context.UserDetails
-                .FirstOrDefaultAsync(m => m.userId == id);
-            if (userDetails == null)
+            var userData = await _context.UserData
+                .FirstOrDefaultAsync(m => m.userID == id);
+            if (userData == null)
             {
                 return NotFound();
             }
 
-            return View(userDetails);
+            return View(userData);
         }
 
-        // POST: UserDetails/Delete/5
+        // POST: UserDatas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.UserDetails == null)
+            if (_context.UserData == null)
             {
-                return Problem("Entity set 'DataContext.UserDetails'  is null.");
+                return Problem("Entity set 'DataContext.UserData'  is null.");
             }
-            var userDetails = await _context.UserDetails.FindAsync(id);
-            if (userDetails != null)
+            var userData = await _context.UserData.FindAsync(id);
+            if (userData != null)
             {
-                _context.UserDetails.Remove(userDetails);
+                _context.UserData.Remove(userData);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserDetailsExists(int id)
+        private bool UserDataExists(int id)
         {
-          return (_context.UserDetails?.Any(e => e.userId == id)).GetValueOrDefault();
+          return (_context.UserData?.Any(e => e.userID == id)).GetValueOrDefault();
         }
     }
 }
