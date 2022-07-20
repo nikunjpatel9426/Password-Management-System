@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Assignment1CRUD.Data;
 using Assignment1CRUD.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment1CRUD.Controllers
 {
+    [Authorize]
     public class UserDatasController : Controller
     {
         private readonly DataContext _context;
@@ -19,6 +21,7 @@ namespace Assignment1CRUD.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         // GET: UserDatas
         public async Task<IActionResult> Index()
         {
